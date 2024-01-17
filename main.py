@@ -1,6 +1,6 @@
 import sounddevice as sd
 import numpy as np
-import time
+from datetime import datetime
 
 loudness_limit = 2  # in dB
 detected = False
@@ -21,19 +21,24 @@ def callback(indata, frames, time, status):
         detected = True
     else:
         detected = False
-        # do something here
 
-# Set up the microphone recording stream
 duration = 10  # in seconds
-sample_rate = 44100  # you can adjust this based on your microphone
+sample_rate = 44100
 interval = 1
 warned = False
+multiplicateur = 0
+
 with sd.InputStream(callback=callback, channels=1, samplerate=sample_rate):
     while True:
         sd.sleep(int(interval * 1000))
+        current_time = datetime.now().hour
+        if current_time > 22 or current_time < 7:
+            multiplicateur = 2
+        else:
+            multiplicateur = 1
         if detected:
             number_of_seconds_since_silence = 0
-            number_of_seconds_since_loud_sound += 1
+            number_of_seconds_since_loud_sound += multiplicateur
             if not warned and number_of_seconds_since_loud_sound > number_of_seconds_before_warning:
                 print("WARNING: Loud sound detected for more than 10 seconds!")
                 warned = True
@@ -48,5 +53,3 @@ with sd.InputStream(callback=callback, channels=1, samplerate=sample_rate):
                 number_of_seconds_since_silence = 0
                 warned = False
             detected = False
-
-print("Recording finished.")
