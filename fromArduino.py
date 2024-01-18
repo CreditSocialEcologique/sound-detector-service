@@ -22,6 +22,8 @@ def main():
     base_url = "http://intensif05.ecole.ensicaen.fr:8080/"
     route_warning = "soundWarning"
     route_police = "soundPoliceAlert"
+    route_warning = "api/sound/reduceScore"
+    route_police = "api/sound/reduceScore"
     id_device = "1"
 
     number_of_seconds_since_loud_sound = 0
@@ -49,12 +51,12 @@ def main():
                 number_of_seconds_since_loud_sound += multiplicateur
                 if not warned and number_of_seconds_since_loud_sound > number_of_seconds_before_warning:
                     print("WARNING: Loud sound detected for more than 10 seconds!")
-                    asyncio.run(send_request(base_url + route_warning, {"id_device": id_device, "message": "WARNING: Loud sound detected for more than 10 seconds!"}))
+                    asyncio.run(send_request(base_url + route_warning, {"id_user": id_device, "message": "WARNING: Loud sound detected for more than 10 seconds!"}))
                     warned = True
                 if not police_sent and number_of_seconds_since_loud_sound > number_of_seconds_before_police:
                     print("WARNING: Police have been notified!")
                     number_of_seconds_since_loud_sound = 0
-                    asyncio.run(send_request(base_url + route_police, {"id_device": id_device, "message": "WARNING: Police have been notified!"}))
+                    asyncio.run(send_request(base_url + route_police, {"id_user": id_device, "message": "WARNING: Police have been notified!"}))
                     police_sent = True
 
             else:
