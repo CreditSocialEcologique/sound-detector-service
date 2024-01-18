@@ -15,7 +15,7 @@ def callback(indata, frames, time, status):
     if status:
         print(status, flush=True)
     volume_norm = np.linalg.norm(indata) * 10
-    #print(f"Microphone input volume: {volume_norm:.2f} dB")
+    print(f"Microphone input volume: {volume_norm:.2f} dB")
     if volume_norm > loudness_limit:
         #print("Loud sound detected!")
         detected = True
@@ -26,7 +26,7 @@ duration = 10  # in seconds
 sample_rate = 44100
 interval = 1
 warned = False
-multiplicateur = 0
+multiplicateur = 1
 
 with sd.InputStream(callback=callback, channels=1, samplerate=sample_rate):
     while True:
