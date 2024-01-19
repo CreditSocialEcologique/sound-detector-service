@@ -27,7 +27,7 @@ def main():
         print(f"Connected to {arduino_port} at {baud_rate} baud")
 
         while True:
-            data = arduino.readline().decode('utf-8').strip() # Lit ce que l'arduino envie
+            data = arduino.readline().decode('utf-8').strip() # Lit ce que l'arduino envoie
             if "1" in data: # Quand l'arduino envoie 1, cela veut dire qu'il y a de la pollution sonore
                 print("LOUD SOUND DETECTED!")
                 asyncio.run(send_request(base_url + route, {"id_user": id_device})) # Crée une tache asynchrone qui va lancer la requete web
