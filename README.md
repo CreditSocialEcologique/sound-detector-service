@@ -1,6 +1,13 @@
 # sound-detector
 Tool to detect and prevent sound pollution
 
+Pour lancer le projet :
+
+```bash
+sudo apt install python3-serial
+pip install aiohttp
+```
+
 Pour installer la version qui utilise le microphone de l'ordinateur :
 ```bash
 sudo apt install python3-pyaudio
